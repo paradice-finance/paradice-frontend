@@ -4,6 +4,8 @@ import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 import 'antd/dist/reset.css';
+import Navbar from './navbar';
+import Footer from './footer';
 
 const name = '[Your Name]';
 export const siteTitle = 'Next.js Sample Website';
@@ -16,7 +18,7 @@ export default function Layout({
   home?: boolean;
 }) {
   return (
-    <div className={styles.container}>
+    <div className="min-h-screen flex flex-col">
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -32,45 +34,18 @@ export default function Layout({
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={styles.header}>
-        {home ? (
-          <>
-            <Image
-              priority
-              src="/images/profile.jpg"
-              className={utilStyles.borderCircle}
-              height={144}
-              width={144}
-              alt={name}
-            />
-            <h1 className={`${utilStyles.heading2Xl} font-bold underline`}>{name}</h1>
-          </>
-        ) : (
-          <>
-            <Link href="/">
-              <Image
-                priority
-                src="/images/profile.jpg"
-                className={utilStyles.borderCircle}
-                height={108}
-                width={108}
-                alt={name}
-              />
-            </Link>
-            <h2 className={utilStyles.headingLg}>
-              <Link href="/" className={utilStyles.colorInherit}>
-                {name}
-              </Link>
-            </h2>
-          </>
-        )}
+      <header>
+        <Navbar />
       </header>
-      <main>{children}</main>
+      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">{children}</main>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">← Back to home</Link>
         </div>
       )}
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

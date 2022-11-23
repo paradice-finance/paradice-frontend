@@ -13,7 +13,10 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "remark": "^14.0.2",
-    "remark-html": "^15.0.1"
+    "remark-html": "^15.0.1",
+    "next-themes": "^0.0.14",
+    "@headlessui/react": "^1.2.0",
+    "@tailwindcss/aspect-ratio": "^0.2.1"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
