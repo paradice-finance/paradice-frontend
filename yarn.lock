@@ -10,9 +10,9 @@
     "@ctrl/tinycolor" "^3.4.0"
 
 "@ant-design/cssinjs@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@ant-design/cssinjs/-/cssinjs-1.0.0.tgz#c2f3457f85449c9997d05aed4bef54d9e908cc57"
-  integrity sha512-MXrr59WU03RMK2Zlp1zjJzevC8bqNiK4Hkv/WUEounBH35qirbx83DbY2ASkVSn6pdEGI9lCF2LS4oVytDOauQ==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@ant-design/cssinjs/-/cssinjs-1.0.2.tgz#9eab8a44358209c988c706bbad200fb5763b7815"
+  integrity sha512-UzmLG9G9w9rxGrIdn8BYoOjnFCK/PJTzz1zWEFL29ix294GauOGM+wWiKHf5TZliw2+bFxTZbrMkhdmcphYe6Q==
   dependencies:
     "@babel/runtime" "^7.11.1"
     "@emotion/hash" "^0.8.0"
@@ -2748,10 +2748,10 @@ next-auth@^4.17.0:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
-next-themes@^0.0.14:
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/next-themes/-/next-themes-0.0.14.tgz#2b9861990bc453149e23d8e6ef1a25a119e36675"
-  integrity sha512-x09OaM+wg3SIlEjOv8B21aw/E36jxTtfW3Dm/DPwMsSMluGt7twe1LigA6nc+mXP1u0qu9MxBaIrPPH6UTiKnA==
+next-themes@^0.2.0:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/next-themes/-/next-themes-0.2.1.tgz#0c9f128e847979daf6c67f70b38e6b6567856e45"
+  integrity sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==
 
 next@^13.0.2:
   version "13.0.4"
@@ -3232,9 +3232,9 @@ rc-pagination@~3.2.0:
     classnames "^2.2.1"
 
 rc-picker@~3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/rc-picker/-/rc-picker-3.1.1.tgz#f9a2988e73d429d4dbb0bc4fe5940823640a977c"
-  integrity sha512-Z61U2upedvnMJ0SafnGF89tyiQd421lYrkZCTZmywOcJpC4zKieuVmsGD/uHnlx4gMtcwooVWNCuVezomNtk8g==
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/rc-picker/-/rc-picker-3.1.2.tgz#fac85964007bdc906d33a8400f53798744ab440f"
+  integrity sha512-PHf4E91JANMBVjovqhRcZw0fDZYWlDW9APhMD8VxBSs2QeKbnf+vE5BdA3YmHq227woSptbkm9rfhR4dgSn4+g==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.1"

@@ -4,6 +4,7 @@ import { WagmiProvider } from 'wagmi';
 import { SessionProvider } from 'next-auth/react';
 import '../styles/global.css';
 
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider autoConnect>
