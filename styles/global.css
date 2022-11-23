@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html,
+  body {
+    @apply dark:bg-trueGray-900;
+  }
+}
+
 html,
 body {
   padding: 0;
@@ -17,12 +24,8 @@ body {
 }
 
 a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
+  color: inherit;
+  text-decoration: inherit;
 }
 
 img {
