@@ -26,7 +26,7 @@ export function ModalBuyTicket(props: ModalBuyTicketProps) {
           </div>
           {/* content input*/}
           <div className="items-center mb-6">
-            {/* inout area */}
+            {/* input area */}
             <div className="border border-[#ED4B9E] rounded-lg outline outline-pink-500/[.25]">
               <div className="w-11/12 text-right pt-2">
                 <input
