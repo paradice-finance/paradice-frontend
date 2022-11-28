@@ -4,8 +4,8 @@ import utilStyles from '../styles/utils.module.css';
 import { getSortedPostsData } from '../lib/posts';
 import { useEffect, useState } from 'react';
 import { GetStaticProps } from 'next';
-import { Button, Card } from 'antd';
-import Table, { ColumnsType } from 'antd/es/table';
+import { Button, Card, Table } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 
 interface DataType {
   key: string;
