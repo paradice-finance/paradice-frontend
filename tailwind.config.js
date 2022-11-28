@@ -14,6 +14,9 @@ module.exports = {
       colors: {
         trueGray: colors.neutral,
       },
+      willChange: {
+        opacity: "opacity",
+      },
     },
     fontFamily: {
       sans: ["Inter", ...defaultTheme.fontFamily.sans],
