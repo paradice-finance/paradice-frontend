@@ -18,7 +18,7 @@ export default function Layout({
   home?: boolean;
 }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen">
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -37,7 +37,7 @@ export default function Layout({
       <header>
         <Navbar />
       </header>
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">{children}</main>
+      <main className="px-20 text-center">{children}</main>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">← Back to home</Link>

@@ -4,14 +4,62 @@ import utilStyles from '../styles/utils.module.css';
 import { getSortedPostsData } from '../lib/posts';
 import { useEffect, useState } from 'react';
 import { GetStaticProps } from 'next';
-import Image from 'next/image';
+import { Button, Card } from 'antd';
+import Table, { ColumnsType } from 'antd/es/table';
+
+interface DataType {
+  key: string;
+  hash: string;
+  totalWin: number;
+  date: string;
+}
 
 export default function Home() {
   const [hydrated, setHydrated] = useState(false);
-  const ticketNumbers = Array.from({ length: 20 }, () => Math.floor(Math.random() * 20));
+  const ticketNumbers = Array.from({ length: 19 }, () => Math.floor(Math.random() * 20));
   useEffect(() => {
     setHydrated(true);
   }, []);
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'Wallet Address',
+      dataIndex: 'hash',
+      key: 'hash',
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: 'Total Win',
+      dataIndex: 'totalWin',
+      key: 'totalWin',
+    },
+    {
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
+    }
+  ];
+
+  const data: DataType[] = [
+    {
+      key: '1',
+      hash: '0x ... f464',
+      totalWin: 20,
+      date: new Date().toISOString()
+    },
+    {
+      key: '2',
+      hash: '0x ... 022d',
+      totalWin: 50,
+      date: new Date().toISOString()
+    },
+    {
+      key: '3',
+      hash: '0x ... 58e9',
+      totalWin: 100,
+      date: new Date().toISOString()
+    },
+  ];
 
   return (
     <Layout home>
@@ -33,6 +81,18 @@ export default function Home() {
           </div>
         ))}
       </div>
+      <h1 className={`${utilStyles.poolSize} font-bold my-5`}>Sold <span className={utilStyles.gold}>19 Tickets, 1 Ticket</span> left to draw the prize</h1>
+      <h1 className={`${utilStyles.displayTitle} font-bold my-5`}>Simple to Buy, Hold and Win</h1>
+      <Button className="text-center rounded-md lg:ml-5 dark:text-gray-100 text-xl" size="large">
+        Buy Ticket
+      </Button>
+
+      <div className={`${utilStyles.sectionBorder} w-75 w-100-mobile py-5`}></div>
+
+      <h1 className='mt-10'>Statistic</h1>
+      <Card className='p-1'>
+        <Table columns={columns} dataSource={data} />
+      </Card>
     </Layout>
   );
 }
