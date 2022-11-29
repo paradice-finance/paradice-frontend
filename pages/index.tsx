@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/layout';
 import utilStyles from '../styles/utils.module.css';
-import { getSortedPostsData } from '../lib/posts';
 import { useEffect, useState } from 'react';
 import { GetStaticProps } from 'next';
 import { Button, Card, Table } from 'antd';
@@ -61,7 +60,7 @@ export default function Home() {
     },
   ];
 
-  return (
+  return (hydrated &&
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
@@ -74,7 +73,7 @@ export default function Home() {
             </clipPath>
           </defs>
         </svg>
-        {hydrated && ticketNumbers.map((num, index) => (
+        {ticketNumbers.map((num, index) => (
           <div key={index} className={`${utilStyles.ticketCover} relative m-2`}>
             <div className={`${utilStyles.ticket} w-52 h-20`}></div>
             <div className={`${utilStyles.ticketNumber} text-white`}>{num}</div>
@@ -89,19 +88,33 @@ export default function Home() {
 
       <div className={`${utilStyles.sectionBorder} w-75 w-100-mobile py-5`}></div>
 
-      <h1 className='mt-10'>Statistic</h1>
+      <h1 className='mt-10 text-2xl'>Statistic</h1>
       <Card className='p-1'>
         <Table columns={columns} dataSource={data} />
       </Card>
+
+      <h1 className='mt-10 text-2xl'>How to Play</h1>
+      <h2 className='text-xl font-light'>Keep it simple!, You will won the prize if the digits match with winning number</h2>
+      <div className='flex gap-4 justify-center'>
+        <Card className='p-1'>
+          <h1 className='text-xl'>Step 1. Buy Tickets.</h1>
+          <h2 className='text-lg font-light'>Buy more ticket get more chance to win</h2>
+        </Card>
+        <Card className='p-1'>
+          <h1 className='text-xl'>Step 2. Wait for the Draw.</h1>
+          <h2 className='text-lg font-light'>Drawing when ticket sold out for that pull prize</h2>
+        </Card>
+        <Card className='p-1'>
+          <h1 className='text-xl'>Step 3. Claim the prize.</h1>
+          <h2 className='text-lg font-light'>Click Claim button to get the prize</h2>
+        </Card>
+      </div>
     </Layout>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = getSortedPostsData();
   return {
-    props: {
-      allPostsData
-    }
+    props: {}
   };
 };
