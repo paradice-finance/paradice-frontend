@@ -37,7 +37,7 @@ export default function Layout({
       <header>
         <Navbar />
       </header>
-      <main className="px-20 text-center">{children}</main>
+      <main className="text-center">{children}</main>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">← Back to home</Link>
