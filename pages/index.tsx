@@ -125,18 +125,18 @@ export default function Home() {
         <h1 className='mt-10 text-2xl'>How to Play</h1>
         <h2 className='text-xl font-light'>Keep it simple!, You will won the prize if the digits match with winning number</h2>
         <div className='md:flex gap-4 justify-center'>
-          <Card className='p-1 sm:w-full mt-5'>
-            <h1 className='text-xl'>Step 1. Buy Tickets.</h1>
+          <Card className='p-1 sm:w-full mt-5 bg-gray-100'>
+            <h1 className='text-xl text-indigo-800 bg-indigo-100 rounded-md ring-indigo-100 ring-4 dark:ring-indigo-900 dark:bg-indigo-900 dark:text-indigo-200'>Step 1. Buy Tickets.</h1>
             <h2 className='text-lg font-light'>Buy more ticket get more chance to win</h2>
           </Card>
 
-          <Card className='p-1 sm:w-full mt-5'>
-            <h1 className='text-xl'>Step 2. Wait for the Draw.</h1>
+          <Card className='p-1 sm:w-full mt-5 bg-gray-100'>
+            <h1 className='text-xl text-indigo-800 bg-indigo-100 rounded-md ring-indigo-100 ring-4 dark:ring-indigo-900 dark:bg-indigo-900 dark:text-indigo-200'>Step 2. Wait for the Draw.</h1>
             <h2 className='text-lg font-light'>Drawing when ticket sold out for that pull prize</h2>
           </Card>
 
-          <Card className='p-1 sm:w-full mt-5'>
-            <h1 className='text-xl'>Step 3. Claim the prize.</h1>
+          <Card className='p-1 sm:w-full mt-5 bg-gray-100'>
+            <h1 className='text-xl text-indigo-800 bg-indigo-100 rounded-md ring-indigo-100 ring-4 dark:ring-indigo-900 dark:bg-indigo-900 dark:text-indigo-200'>Step 3. Claim the prize.</h1>
             <h2 className='text-lg font-light'>Click Claim button to get the prize</h2>
           </Card>
         </div>
