@@ -1,10 +1,13 @@
 import Head from 'next/head';
-import Layout, { siteTitle } from '../components/layout';
-import utilStyles from '../styles/utils.module.css';
 import { useEffect, useState } from 'react';
 import { GetStaticProps } from 'next';
-import { Button, Card, Table } from 'antd';
+import { Button, Card, Col, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import { motion, Variants } from "framer-motion";
+
+import Layout, { siteTitle } from '../components/layout';
+import utilStyles from '../styles/utils.module.css';
+import Container from '../components/container';
 
 interface DataType {
   key: string;
@@ -12,6 +15,21 @@ interface DataType {
   totalWin: number;
   date: string;
 }
+
+const variants: Variants = {
+  offscreen: {
+    y: 300
+  },
+  onscreen: {
+    y: 50,
+    rotate: -10,
+    transition: {
+      type: "spring",
+      bounce: 0.4,
+      duration: 0.8
+    }
+  }
+};
 
 export default function Home() {
   const [hydrated, setHydrated] = useState(false);
@@ -65,7 +83,7 @@ export default function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <div className='flex flex-wrap justify-center'>
+      <Container className="flex flex-wrap justify-center md:p-8 md:pt-0">
         <svg height="0" width="0">
           <defs>
             <clipPath id="ticket-path" clipPathUnits="objectBoundingBox">
@@ -73,42 +91,56 @@ export default function Home() {
             </clipPath>
           </defs>
         </svg>
+
         {ticketNumbers.map((num, index) => (
-          <div key={index} className={`${utilStyles.ticketCover} relative m-2`}>
-            <div className={`${utilStyles.ticket} w-52 h-20`}></div>
+          <motion.div
+            key={index} className={`${utilStyles.ticketCover} w-2/5 md:w-48 m-2`}
+            initial={{ y: 10, opacity: 0 }}
+            exit={{ y: -10, opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            whileInView={{ opacity: 1 }}
+          >
+            <div className={`${utilStyles.ticket} w-full h-20`}></div>
             <div className={`${utilStyles.ticketNumber} text-white`}>{num}</div>
-          </div>
+
+          </motion.div>
         ))}
-      </div>
-      <h1 className={`${utilStyles.poolSize} font-bold my-5`}>Sold <span className={utilStyles.gold}>19 Tickets, 1 Ticket</span> left to draw the prize</h1>
-      <h1 className={`${utilStyles.displayTitle} font-bold my-5`}>Simple to Buy, Hold and Win</h1>
-      <Button className="text-center rounded-md lg:ml-5 dark:text-gray-100 text-xl" size="large">
-        Buy Ticket
-      </Button>
-
-      <div className={`${utilStyles.sectionBorder} w-75 w-100-mobile py-5`}></div>
-
-      <h1 className='mt-10 text-2xl'>Statistic</h1>
-      <Card className='p-1'>
-        <Table columns={columns} dataSource={data} />
-      </Card>
-
-      <h1 className='mt-10 text-2xl'>How to Play</h1>
-      <h2 className='text-xl font-light'>Keep it simple!, You will won the prize if the digits match with winning number</h2>
-      <div className='flex gap-4 justify-center'>
-        <Card className='p-1'>
-          <h1 className='text-xl'>Step 1. Buy Tickets.</h1>
-          <h2 className='text-lg font-light'>Buy more ticket get more chance to win</h2>
+      </Container>
+      <Container className='p-0'>
+        <h1 className={`${utilStyles.poolSize} font-bold my-5`}>Sold <span className={utilStyles.gold}>19 Tickets, 1 Ticket</span> left to draw the prize</h1>
+        <h1 className={`${utilStyles.displayTitle} font-bold my-5`}>Simple to Buy, Hold and Win</h1>
+        <Button className="text-center rounded-md lg:ml-5 dark:text-gray-100 text-xl" size="large">
+          Buy Ticket
+        </Button>
+      </Container>
+      <Container className='p-4'>
+        <div className={`${utilStyles.sectionBorder} w-75 w-100-mobile py-5`}></div>
+        <h1 className='mt-10 text-2xl'>Statistic</h1>
+        <Card className='p-1' bodyStyle={{ padding: 0 }}>
+          <Table columns={columns} dataSource={data} />
         </Card>
-        <Card className='p-1'>
-          <h1 className='text-xl'>Step 2. Wait for the Draw.</h1>
-          <h2 className='text-lg font-light'>Drawing when ticket sold out for that pull prize</h2>
-        </Card>
-        <Card className='p-1'>
-          <h1 className='text-xl'>Step 3. Claim the prize.</h1>
-          <h2 className='text-lg font-light'>Click Claim button to get the prize</h2>
-        </Card>
-      </div>
+      </Container>
+      <Container className='p-4'>
+        <div className={`${utilStyles.sectionBorder} w-75 w-100-mobile py-5`}></div>
+        <h1 className='mt-10 text-2xl'>How to Play</h1>
+        <h2 className='text-xl font-light'>Keep it simple!, You will won the prize if the digits match with winning number</h2>
+        <div className='md:flex gap-4 justify-center'>
+          <Card className='p-1 sm:w-full mt-5 bg-gray-100'>
+            <h1 className='text-xl text-indigo-800 bg-indigo-100 rounded-md ring-indigo-100 ring-4 dark:ring-indigo-900 dark:bg-indigo-900 dark:text-indigo-200'>Step 1. Buy Tickets.</h1>
+            <h2 className='text-lg font-light'>Buy more ticket get more chance to win</h2>
+          </Card>
+
+          <Card className='p-1 sm:w-full mt-5 bg-gray-100'>
+            <h1 className='text-xl text-indigo-800 bg-indigo-100 rounded-md ring-indigo-100 ring-4 dark:ring-indigo-900 dark:bg-indigo-900 dark:text-indigo-200'>Step 2. Wait for the Draw.</h1>
+            <h2 className='text-lg font-light'>Drawing when ticket sold out for that pull prize</h2>
+          </Card>
+
+          <Card className='p-1 sm:w-full mt-5 bg-gray-100'>
+            <h1 className='text-xl text-indigo-800 bg-indigo-100 rounded-md ring-indigo-100 ring-4 dark:ring-indigo-900 dark:bg-indigo-900 dark:text-indigo-200'>Step 3. Claim the prize.</h1>
+            <h2 className='text-lg font-light'>Click Claim button to get the prize</h2>
+          </Card>
+        </div>
+      </Container>
     </Layout>
   );
 }
