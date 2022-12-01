@@ -215,11 +215,3 @@ export async function getServerSideProps() {
     },
   };
 }
-
-// export const getStaticProps: GetStaticProps = async () => {
-//   return {
-//     props: {
-
-//     },
-//   };
-// };
