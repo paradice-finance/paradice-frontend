@@ -1,8 +1,4 @@
-import {
-  WagmiConfig,
-  createClient,
-  configureChains,
-} from "wagmi";
+import { createClient, configureChains } from "wagmi";
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
@@ -11,11 +7,6 @@ import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import { Profile } from "./display-wallet";
-import { UseNetwork } from "./hookTest/use-network";
-import { UseSwirchNetwork } from "./hookTest/user-switch-network";
-import { UseAccount } from "./hookTest/use-account";
-import { UseDisconnect } from "./hookTest/use-disconnext";
 import { goerli, mainnet } from "../../utils/chains";
 
 const CHAINS = [mainnet, goerli];
@@ -61,16 +52,3 @@ export const client = createClient({
   provider,
   webSocketProvider,
 });
-
-// Pass client to React Context Provider
-export function ConnectWallet() {
-  return (
-    <WagmiConfig client={client}>
-      <UseAccount />
-      <UseNetwork />
-      <UseSwirchNetwork />
-      <Profile />
-      <UseDisconnect />
-    </WagmiConfig>
-  );
-}
