@@ -11,7 +11,7 @@
     "@types/lodash": "^4.14.190",
     "antd": "^5.0.0",
     "date-fns": "^2.29.3",
-    "ethers": "^5.5.1",
+    "ethers": "^5.7.2",
     "framer-motion": "^7.6.15",
     "gray-matter": "^4.0.3",
     "lodash": "^4.17.21",
@@ -23,7 +23,7 @@
     "remark": "^14.0.2",
     "remark-html": "^15.0.1",
     "siwe": "^1.1.6",
-    "wagmi": "^0.2.26"
+    "wagmi": "^0.8.9"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
