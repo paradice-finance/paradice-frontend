@@ -5,45 +5,10 @@ import { SiweMessage } from "siwe";
 import { useAccount, useConnect, useNetwork, useSignMessage } from "wagmi";
 import ThemeChanger from "./DarkSwitch";
 import { Button } from "antd";
+import ConnectWalletButton from "./ConnectWalletButton";
 
 export default function Navbar() {
-  const session = useSession();
-
-  // const [{ data: connectData }, connect] = useConnect();
-  // const [, signMessage] = useSignMessage();
-  // const [{ data: networkData }] = useNetwork();
-  // const [{ data: accountData }] = useAccount();
   const navigation = ["Menu"];
-  // const handleLogin = async () => {
-  //   try {
-  //     await connect(connectData.connectors[0]);
-  //     const callbackUrl = '/protected';
-  //     const message = new SiweMessage({
-  //       domain: window.location.host,
-  //       address: accountData?.address,
-  //       statement: 'Sign in with Ethereum to the app.',
-  //       uri: window.location.origin,
-  //       version: '1',
-  //       chainId: networkData?.chain?.id,
-  //       nonce: await getCsrfToken(),
-  //     });
-  //     const { data: signature, error } = await signMessage({
-  //       message: message.prepareMessage(),
-  //     });
-  //     signIn('credentials', {
-  //       message: JSON.stringify(message),
-  //       redirect: false,
-  //       signature,
-  //       callbackUrl,
-  //     });
-  //   } catch (error) {
-  //     window.alert(error);
-  //   }
-  // };
-
-  const handleLogout = async () => {
-    signOut({ redirect: false });
-  };
 
   return (
     <div className="w-full">
@@ -105,19 +70,7 @@ export default function Navbar() {
                         {item}
                       </Link>
                     ))}
-                    <Button
-                      className="w-full text-center rounded-md lg:ml-5 dark:text-gray-100"
-                      onClick={
-                        session.status === "authenticated"
-                          ? handleLogout
-                          : // : handleLogin
-                            () => console.log("handleLogin")
-                      }
-                    >
-                      {session.status === "authenticated"
-                        ? "Logout"
-                        : "Connect Wallet"}
-                    </Button>
+                    <ConnectWalletButton />
                   </>
                 </Disclosure.Panel>
               </div>
@@ -142,16 +95,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden mr-3 space-x-4 lg:flex nav__item">
-          <Button
-            className="w-full text-center  rounded-md lg:ml-5 dark:text-gray-100"
-            onClick={
-              session.status === "authenticated"
-                ? handleLogout
-                : () => console.log("handle login") //handleLogin
-            }
-          >
-            {session.status === "authenticated" ? "Logout" : "Connect Wallet"}
-          </Button>
+          <ConnectWalletButton />
           <ThemeChanger />
         </div>
       </nav>
