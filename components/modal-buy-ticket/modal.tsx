@@ -2,10 +2,11 @@ import { ChangeEvent, Dispatch, Fragment, useEffect, useState } from "react";
 import { ModalState } from "./modalState";
 import { InputTicket } from "./number-input";
 
-export interface ModalBuyTicketProps {
+interface ModalBuyTicketProps {
   pricePerTicket: number;
   remainTicket: number;
-  balance: number;
+  decimals: number;
+  tokenAddress: string;
   currency: string;
   onCloseModal: () => void;
 }
@@ -13,8 +14,9 @@ export interface ModalBuyTicketProps {
 export function ModalBuyTicket({
   onCloseModal,
   pricePerTicket,
+  tokenAddress,
+  decimals,
   currency,
-  balance,
 }: ModalBuyTicketProps) {
   const initialState: ModalState = { order: [0], tickets: {} };
   const [price, setPrice] = useState(0);
@@ -22,7 +24,9 @@ export function ModalBuyTicket({
   const [lotteryState, setLotteryState] = useState<ModalState>(initialState);
 
   useEffect(() => {
-    setPrice(lotteryState.order.length * pricePerTicket);
+    setPrice(
+      (lotteryState.order.length * pricePerTicket) / Math.pow(10, decimals)
+    );
   }, [lotteryState]);
   const setLotteryNumber = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -73,7 +77,6 @@ export function ModalBuyTicket({
 
   const onSubmit = async () => {
     setLoading(true);
-    console.log(lotteryState);
     const timer = setTimeout(() => {
       setLoading(false);
     }, 3000);

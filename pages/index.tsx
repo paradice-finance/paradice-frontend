@@ -1,16 +1,16 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Table } from "antd";
+import { Button, Card, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { motion, Variants } from "framer-motion";
 
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import Container from "../components/container";
-import {
-  ModalBuyTicket,
-  ModalBuyTicketProps,
-} from "../components/modal-buy-ticket/modal";
+import { ModalBuyTicket } from "../components/modal-buy-ticket/modal";
+import { useNetwork } from "wagmi";
+import useSWR from "swr";
+import { LotteryInfo } from "../components/smart-contract/type";
 
 interface DataType {
   key: string;
@@ -33,18 +33,22 @@ const variants: Variants = {
     },
   },
 };
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default function Home({
-  pricePerTicket,
-  remainTicket,
-  balance,
-  currency,
-}: ModalBuyTicketProps) {
+export default function Home() {
   const [hydrated, setHydrated] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
+  const { chain } = useNetwork();
+
+  const { data: currentLotteryData, error: currentLotteryError } =
+    useSWR<LotteryInfo>(
+      "http://localhost:3000/api/sc/lottery/current",
+      fetcher
+    );
   const ticketNumbers = Array.from({ length: 19 }, () =>
     Math.floor(Math.random() * 20)
   );
+
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -72,7 +76,7 @@ export default function Home({
     },
   ];
 
-  const data: DataType[] = [
+  const dataSource: DataType[] = [
     {
       key: "1",
       hash: "0x ... f464",
@@ -147,7 +151,7 @@ export default function Home({
             ></div>
             <h1 className="mt-10 text-2xl">Statistic</h1>
             <Card className="p-1" bodyStyle={{ padding: 0 }}>
-              <Table columns={columns} dataSource={data} />
+              <Table columns={columns} dataSource={dataSource} />
             </Card>
           </Container>
           <Container className="p-4">
@@ -190,13 +194,14 @@ export default function Home({
           </Container>
         </Layout>
       )}
-      {isShowModal && (
+      {isShowModal && currentLotteryData && (
         <div>
           <ModalBuyTicket
-            pricePerTicket={pricePerTicket}
-            remainTicket={remainTicket}
-            balance={balance}
-            currency={currency}
+            decimals={currentLotteryData.currecyDecimals}
+            pricePerTicket={currentLotteryData.ticketPrice}
+            tokenAddress={currentLotteryData.tokenAddress}
+            currency={currentLotteryData.currency}
+            remainTicket={10}
             onCloseModal={() => setIsShowModal(false)}
           />
         </div>
@@ -207,11 +212,6 @@ export default function Home({
 
 export async function getServerSideProps() {
   return {
-    props: {
-      pricePerTicket: 1,
-      remainTicket: 20,
-      balance: 100,
-      currency: "USD",
-    },
+    props: {},
   };
 }
