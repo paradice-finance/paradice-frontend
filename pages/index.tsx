@@ -38,13 +38,9 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function Home() {
   const [hydrated, setHydrated] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
-  const { chain } = useNetwork();
 
   const { data: currentLotteryData, error: currentLotteryError } =
-    useSWR<LotteryInfo>(
-      "http://localhost:3000/api/sc/lottery/current",
-      fetcher
-    );
+    useSWR<LotteryInfo>("/api/sc/lottery/current", fetcher);
   const ticketNumbers = Array.from({ length: 19 }, () =>
     Math.floor(Math.random() * 20)
   );

@@ -8,7 +8,7 @@ import {
 } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
 import { configureChains, createClient } from "wagmi";
-import { arbitrum, bsc, mainnet, polygon } from 'wagmi/chains';
+import { arbitrum, bsc, mainnet, polygon, goerli } from "wagmi/chains";
 
 import WagmiProvider from "../components/WagmiProvider";
 import "../styles/global.css";
@@ -16,9 +16,11 @@ import "../styles/global.css";
 export default function App({ Component, pageProps }: AppProps) {
   const { WALLETCONNECT_PROJECT_ID } = process.env;
   if (!WALLETCONNECT_PROJECT_ID) {
-    throw new Error('You need to provide WALLETCONNECT_PROJECT_ID env variable');
+    throw new Error(
+      "You need to provide WALLETCONNECT_PROJECT_ID env variable"
+    );
   }
-  const chains = [arbitrum, mainnet, polygon, bsc];
+  const chains = [goerli, arbitrum, mainnet, polygon, bsc];
 
   // Wagmi client
   const { provider } = configureChains(chains, [
