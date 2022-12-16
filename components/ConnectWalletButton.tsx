@@ -1,51 +1,38 @@
-import { Button } from 'antd';
-import { Connector, useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } from 'wagmi';
-import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react';
-import React, { useEffect, useRef, useState } from 'react';
+import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
+import { getCsrfToken, signIn, signOut } from 'next-auth/react';
+import React, { useEffect } from 'react';
 import { SiweMessage } from 'siwe';
-import { verifyMessage } from 'ethers/lib/utils.js';
+import { Web3Button, useWeb3ModalNetwork } from '@web3modal/react';
 
 const ConnectWalletButton = () => {
-  const session = useSession();
-  const { connector: activeConnector, isConnected } = useAccount();
-  const [connector, setConnector] = useState<Connector | undefined>();
-  const { data: connectData, connectAsync, connectors, isLoading, pendingConnector
-  } = useConnect();
-  const { disconnectAsync } = useDisconnect();
-  const { chain } = useNetwork();
   const { address } = useAccount();
-  const recoveredAddress = useRef({});
-  const { signMessageAsync } = useSignMessage({
-    onSuccess(data, variables) {
-      // Verify signature when sign message succeeds
-      const address = verifyMessage(variables.message, data);
-      recoveredAddress.current = address;
-    },
-  });
+  const { disconnectAsync } = useDisconnect();
+  const { signMessageAsync } = useSignMessage();
+  const { selectedChain, } = useWeb3ModalNetwork();
 
   useEffect(() => {
-    const metaMaskConnector = activeConnector || connectors.find((c) => c.id === 'metaMask');
-    setConnector(metaMaskConnector);
-  }, []);
+    if (selectedChain?.id) {
+      handleLogin();
+    }
+    else {
+      handleLogout();
+    }
+  }, [selectedChain]);
 
   const handleLogin = async () => {
     try {
-      let connected;
-      let connectAddress = connectData?.account || address;
-      if (!isConnected) {
-        connected = await connectAsync({ connector });
-        connectAddress = connected?.account;
-      }
+      if (!address) return;
       const callbackUrl = '/protected';
       const message = new SiweMessage({
         domain: window.location.host,
-        address: connectAddress,
+        address: address,
         statement: 'Sign in with MetaMask to the app.',
         uri: window.location.origin,
         version: '1',
-        chainId: connectData?.chain.id || chain?.id || connected?.chain.id,
+        chainId: selectedChain?.id,
         nonce: await getCsrfToken(),
       });
+      console.log('handleLogin address', address);
       const signature = await signMessageAsync({
         message: message.prepareMessage(),
       });
@@ -66,18 +53,7 @@ const ConnectWalletButton = () => {
     await signOut({ redirect: false });
   };
 
-  return (
-    <>
-      <Button disabled={!connector?.ready}
-        key={connector?.id}
-        onClick={session.status == 'unauthenticated' ? handleLogin : handleLogout}
-      >
-        {session.status == 'unauthenticated' ? "Connect Wallet" : "Logout"}
-        {!connector?.ready && " (unsupported)"}
-        {isLoading && connector?.id === pendingConnector?.id && " (connecting)"}
-      </Button>
-    </>
-  );
+  return <Web3Button />;
 };
 
 export default ConnectWalletButton;
