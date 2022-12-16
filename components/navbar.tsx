@@ -1,10 +1,6 @@
 import Link from "next/link";
 import { Disclosure } from "@headlessui/react";
-import { getCsrfToken, signIn, useSession, signOut } from "next-auth/react";
-import { SiweMessage } from "siwe";
-import { useAccount, useConnect, useNetwork, useSignMessage } from "wagmi";
 import ThemeChanger from "./DarkSwitch";
-import { Button } from "antd";
 import ConnectWalletButton from "./ConnectWalletButton";
 
 export default function Navbar() {
@@ -59,13 +55,13 @@ export default function Navbar() {
                   </svg>
                 </Disclosure.Button>
 
-                <Disclosure.Panel className="flex flex-wrap w-full my-5 lg:hidden">
+                <Disclosure.Panel className="flex flex-wrap w-full my-5 lg:hidden justify-center">
                   <>
                     {navigation.map((item, index) => (
                       <Link
                         key={index}
                         href="/"
-                        className="w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none dark:focus:bg-trueGray-700"
+                        className="w-full text-center px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none dark:focus:bg-trueGray-700"
                       >
                         {item}
                       </Link>
@@ -94,11 +90,11 @@ export default function Navbar() {
           </ul>
         </div>
 
-        <div className="hidden mr-3 space-x-4 lg:flex nav__item">
+        <div className="hidden mr-3 space-x-4 lg:flex nav__item d-flex justify-end" style={{ width: '210px' }}>
           <ConnectWalletButton />
           <ThemeChanger />
         </div>
-      </nav>
-    </div>
+      </nav >
+    </div >
   );
 }

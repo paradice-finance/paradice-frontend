@@ -1,4 +1,3 @@
-import { defaultChains } from "wagmi";
 import { mainnet, goerli } from "wagmi/chains";
 import { Chain } from "wagmi";
 
@@ -7,7 +6,7 @@ export const avalandche: Chain = {
   name: "Avalanche C-Chain",
   network: "avalanche",
   rpcUrls: {
-    default: "https://rpc.ankr.com/avalanche",
+    default: { http: ["https://rpc.ankr.com/avalanche"] },
   },
   nativeCurrency: { name: "Avalanche", symbol: "AVAX", decimals: 18 },
   blockExplorers: {
@@ -23,7 +22,7 @@ export const avalandcheFuji: Chain = {
   name: "Avalanche Fuji",
   network: "avalanche-fuji",
   rpcUrls: {
-    default: "https://rpc.ankr.com/avalanche_fuji",
+    default: { http: ["https://rpc.ankr.com/avalanche_fuji"] },
   },
   nativeCurrency: { name: "Avalanche", symbol: "AVAX", decimals: 18 },
   blockExplorers: {
@@ -41,7 +40,7 @@ export const fantomOpera: Chain = {
   network: "fantom",
   nativeCurrency: { name: "Fantom", symbol: "FTM", decimals: 18 },
   rpcUrls: {
-    default: "https://rpc.ftm.tools",
+    default: { http: ["https://rpc.ftm.tools"] },
   },
   blockExplorers: {
     default: {
@@ -57,7 +56,7 @@ export const fantomTestnet: Chain = {
   network: "fantom-testnet",
   nativeCurrency: { name: "Fantom", symbol: "FTM", decimals: 18 },
   rpcUrls: {
-    default: "https://rpc.testnet.fantom.network",
+    default: { http: ["https://rpc.testnet.fantom.network"] },
   },
   blockExplorers: {
     default: {
@@ -68,4 +67,4 @@ export const fantomTestnet: Chain = {
   testnet: true,
 };
 
-export { defaultChains, mainnet, goerli };
+export { mainnet, goerli };

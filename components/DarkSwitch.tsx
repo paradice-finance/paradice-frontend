@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { useWeb3ModalTheme } from '@web3modal/react';
 
 const ThemeChanger = () => {
-  const [mounted, setMounted] = useState(false);
+  const [ready, setReady] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { setTheme: setWeb3ModalTheme } = useWeb3ModalTheme();
+
+  const setMode = (mode: 'dark' | 'light') => {
+    setTheme(mode);
+    setWeb3ModalTheme({ themeMode: mode });
+  };
 
   // When mounted on client, now we can show the UI
-  useEffect(() => setMounted(true), []);
+  useEffect(() => setReady(true), []);
 
-  if (!mounted) return null;
+  if (!ready) return null;
 
   return (
     <div className="flex items-center">
       {theme === "dark" ? (
         <button
-          onClick={() => setTheme("light")}
+          onClick={() => setMode("light")}
           className="text-gray-300 rounded-full outline-none focus:outline-none">
           <span className="sr-only">Light Mode</span>
 
@@ -28,7 +35,7 @@ const ThemeChanger = () => {
         </button>
       ) : (
         <button
-          onClick={() => setTheme("dark")}
+          onClick={() => setMode("dark")}
           className="text-gray-500 rounded-full outline-none focus:outline-none focus-visible:ring focus-visible:ring-gray-100 focus:ring-opacity-20">
           <span className="sr-only">Dark Mode</span>
           <svg
