@@ -1,20 +1,19 @@
-import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
-import { getCsrfToken, signIn, signOut } from 'next-auth/react';
-import React, { useEffect } from 'react';
-import { SiweMessage } from 'siwe';
-import { Web3Button, useWeb3ModalNetwork } from '@web3modal/react';
+import { useAccount, useDisconnect, useSignMessage } from "wagmi";
+import { getCsrfToken, signIn, signOut } from "next-auth/react";
+import React, { useEffect } from "react";
+import { SiweMessage } from "siwe";
+import { Web3Button, useWeb3ModalNetwork } from "@web3modal/react";
 
 const ConnectWalletButton = () => {
   const { address } = useAccount();
   const { disconnectAsync } = useDisconnect();
   const { signMessageAsync } = useSignMessage();
-  const { selectedChain, } = useWeb3ModalNetwork();
+  const { selectedChain } = useWeb3ModalNetwork();
 
   useEffect(() => {
     if (selectedChain?.id) {
       handleLogin();
-    }
-    else {
+    } else {
       handleLogout();
     }
   }, [selectedChain]);
@@ -22,17 +21,16 @@ const ConnectWalletButton = () => {
   const handleLogin = async () => {
     try {
       if (!address) return;
-      const callbackUrl = '/protected';
+      const callbackUrl = "/protected";
       const message = new SiweMessage({
         domain: window.location.host,
         address: address,
-        statement: 'Sign in with MetaMask to the app.',
+        statement: "Sign in with MetaMask to the app.",
         uri: window.location.origin,
-        version: '1',
+        version: "1",
         chainId: selectedChain?.id,
         nonce: await getCsrfToken(),
       });
-      console.log('handleLogin address', address);
       const signature = await signMessageAsync({
         message: message.prepareMessage(),
       });
@@ -42,7 +40,7 @@ const ConnectWalletButton = () => {
         signature,
         callbackUrl,
       };
-      signIn('credentials', credentials);
+      signIn("credentials", credentials);
     } catch (error) {
       window.alert(error);
     }

@@ -25,6 +25,7 @@
     "remark": "^14.0.2",
     "remark-html": "^15.0.1",
     "siwe": "^1.1.6",
+    "swr": "^2.0.0",
     "wagmi": "^0.9.3"
   },
   "devDependencies": {
