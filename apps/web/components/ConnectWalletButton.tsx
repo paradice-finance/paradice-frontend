@@ -11,10 +11,12 @@ const ConnectWalletButton = () => {
   const { selectedChain } = useWeb3ModalNetwork();
 
   useEffect(() => {
-    if (selectedChain?.id) {
-      handleLogin();
-    } else {
-      handleLogout();
+    if (!address) {
+      if (selectedChain?.id) {
+        handleLogin();
+      } else {
+        handleLogout();
+      }
     }
   }, [selectedChain]);
 

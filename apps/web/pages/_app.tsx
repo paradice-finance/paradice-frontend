@@ -12,10 +12,16 @@ import { arbitrum, bsc, mainnet, polygon, goerli } from "wagmi/chains";
 
 import WagmiProvider from "../components/WagmiProvider";
 import "../styles/global.css";
+import { useEffect, useState } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { WALLETCONNECT_PROJECT_ID } = process.env;
-  if (!WALLETCONNECT_PROJECT_ID) {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (ready && !process.env.WALLETCONNECT_PROJECT_ID) {
     throw new Error(
       "You need to provide WALLETCONNECT_PROJECT_ID env variable"
     );
@@ -24,7 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   // Wagmi client
   const { provider } = configureChains(chains, [
-    walletConnectProvider({ projectId: WALLETCONNECT_PROJECT_ID! }),
+    walletConnectProvider({ projectId: process.env.WALLETCONNECT_PROJECT_ID! }),
   ]);
   const wagmiClient = createClient({
     autoConnect: true,
@@ -35,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
   // Web3Modal Ethereum Client
   const ethereumClient = new EthereumClient(wagmiClient, chains);
 
-  return (
+  return (ready &&
     <>
       <WagmiProvider>
         <SessionProvider session={pageProps.session} refetchInterval={0}>
@@ -45,7 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </SessionProvider>
       </WagmiProvider>
       <Web3Modal
-        projectId={WALLETCONNECT_PROJECT_ID}
+        projectId={process.env.WALLETCONNECT_PROJECT_ID}
         ethereumClient={ethereumClient}
       />
     </>
