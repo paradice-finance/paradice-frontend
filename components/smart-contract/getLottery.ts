@@ -1,12 +1,11 @@
 import { BigNumber } from "ethers";
 import { readContracts } from "wagmi";
 import { ContractReadResult, lotteryRead } from "./readContract";
-import { LotteryInfo } from "./type";
+import { LotteryEnv, LotteryInfo } from "../type";
 import erc20ABI from "../../public/abi/erc20.json";
 
 export async function getLottery(roundId: string): Promise<LotteryInfo | null> {
-  const address = process.env.LOTTERY_ADDRESS;
-  const chainId = Number(process.env.CHAIN_ID);
+  const { address, chainId } = LotteryEnv;
   try {
     if (roundId === "current") {
       const resp = await lotteryRead("getCurrentLottery", address, chainId);

@@ -25,25 +25,6 @@ export async function lotteryRead(
   return resp;
 }
 
-// export async function contractRead(
-//   functionName: string,
-//   args?: string[]
-// ): Promise<ContractReadResult> {
-//   const resp = (await readContract({
-//     address: process.env.LOTTERY_ADDRESS,
-//     abi: abi,
-//     functionName,
-//     chainId: Number(process.env.CHAIN_ID),
-//     args,
-//   })) as any;
-
-//   if (resp && resp._isBigNumber) {
-//     return Number(BigNumber.from(resp._hex).toString());
-//   }
-
-//   return resp;
-// }
-
 type Erc20Function =
   | "symbol"
   | "name"

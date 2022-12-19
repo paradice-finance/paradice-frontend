@@ -8,9 +8,9 @@ import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import Container from "../components/container";
 import { ModalBuyTicket } from "../components/modal-buy-ticket/modal";
-import { useNetwork } from "wagmi";
 import useSWR from "swr";
 import { LotteryInfo } from "../components/smart-contract/type";
+import { RemainTicket } from "../components/type";
 
 interface DataType {
   key: string;
@@ -38,16 +38,34 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function Home() {
   const [hydrated, setHydrated] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
+  const [availableTicket, setAvailableTicket] = useState<number>(0);
+  const [lotteryInfo, setLotteryInfo] = useState<LotteryInfo | null>(null);
 
   const { data: currentLotteryData, error: currentLotteryError } =
     useSWR<LotteryInfo>("/api/sc/lottery/current", fetcher);
-  const ticketNumbers = Array.from({ length: 19 }, () =>
-    Math.floor(Math.random() * 20)
+
+  const { data: remainTicket, error: reamianTicketError } =
+    useSWR<RemainTicket>("/api/sc/lottery/getRemainTicket", fetcher, {
+      refreshInterval: 5 * 1000,
+    });
+
+  const ticketNumbers = Array.from(
+    { length: lotteryInfo ? lotteryInfo.sizeOfLottery : 20 },
+    () => Math.floor(Math.random() * 20)
   );
 
   useEffect(() => {
     setHydrated(true);
   }, []);
+
+  useEffect(() => {
+    if (remainTicket && remainTicket.remainTicket) {
+      setAvailableTicket(remainTicket.remainTicket);
+    }
+    if (currentLotteryData) {
+      setLotteryInfo(() => ({ ...currentLotteryData }));
+    }
+  }, [remainTicket?.remainTicket, currentLotteryData]);
 
   const openModal = () => {
     setIsShowModal(true);
@@ -127,8 +145,13 @@ export default function Home() {
           </Container>
           <Container className="p-0">
             <h1 className={`${utilStyles.poolSize} font-bold my-5`}>
-              Sold <span className={utilStyles.gold}>19 Tickets, 1 Ticket</span>{" "}
-              left to draw the prize
+              Sold
+              {lotteryInfo && (
+                <span className={utilStyles.gold}>
+                  {lotteryInfo.sizeOfLottery - availableTicket} Tickets,
+                  {availableTicket} Ticket Available
+                </span>
+              )}
             </h1>
             <h1 className={`${utilStyles.displayTitle} font-bold my-5`}>
               Simple to Buy, Hold and Win

@@ -1,6 +1,9 @@
-import { ChangeEvent, Dispatch, Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 import { ModalState } from "./modalState";
 import { InputTicket } from "./number-input";
+import { WalletBalance } from "../type";
+import useSWR from "swr";
 
 interface ModalBuyTicketProps {
   pricePerTicket: number;
@@ -22,12 +25,41 @@ export function ModalBuyTicket({
   const [price, setPrice] = useState(0);
   const [loading, setLoading] = useState(false);
   const [lotteryState, setLotteryState] = useState<ModalState>(initialState);
+  const [userBalance, setUserBalance] = useState<number>(0);
+  const { address } = useAccount();
 
+  const fetcher = (url: string) =>
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(requestBody),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+
+  const requestBody = {
+    walletAddress: address,
+  };
+
+  const { data: wallet, error: walletError } = useSWR<WalletBalance>(
+    `api/sc/tokenBalance/${tokenAddress}`,
+    fetcher,
+    {
+      refreshInterval: 5 * 1000,
+    }
+  );
   useEffect(() => {
     setPrice(
       (lotteryState.order.length * pricePerTicket) / Math.pow(10, decimals)
     );
   }, [lotteryState]);
+
+  useEffect(() => {
+    if (wallet?.balance) {
+      setUserBalance(wallet?.balance);
+    }
+  }, [wallet?.balance]);
+
   const setLotteryNumber = (
     event: React.ChangeEvent<HTMLInputElement>,
     key: number
@@ -110,14 +142,22 @@ export function ModalBuyTicket({
               +
             </button>
           </div>
-          <div className=" block">
-            <div className=" inline-block text-sm w-9/12">Your Ticket</div>
+          <div className="flex justify-between">
+            <div className="inline-block text-sm  overflow-hidden">
+              You Balance
+            </div>
+            <div className="overflow-hidden inline-block text-[15px]">
+              {userBalance} {currency}
+            </div>
+          </div>
+          <div className=" flex justify-between">
+            <div className=" inline-block text-sm ">Your Ticket</div>
             <div className=" inline-block text-sm">
               {lotteryState.order.length} {"Tickets"}
             </div>
           </div>
-          <div className="block">
-            <div className="inline-block text-sm w-9/12">You pay</div>
+          <div className="flex justify-between">
+            <div className="inline-block text-sm ">You pay</div>
             <div className="inline-block text-m text-[#280D5F]">
               {price} {currency}
             </div>
