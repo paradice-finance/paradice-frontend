@@ -52,7 +52,7 @@ export function ModalBuyTicket({
     setPrice(
       (lotteryState.order.length * pricePerTicket) / Math.pow(10, decimals)
     );
-  }, [lotteryState]);
+  }, [decimals, lotteryState, pricePerTicket]);
 
   useEffect(() => {
     if (wallet?.balance) {

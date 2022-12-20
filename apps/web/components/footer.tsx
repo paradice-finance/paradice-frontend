@@ -48,7 +48,7 @@ export default function Footer() {
               <a
                 href="https://twitter.com"
                 target="_blank"
-                rel="noopener">
+                rel="noreferrer">
                 <span className="sr-only">Twitter</span>
                 <Twitter />
               </a>

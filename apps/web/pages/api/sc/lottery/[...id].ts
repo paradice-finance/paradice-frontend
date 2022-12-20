@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getLottery } from "../../../../components/smart-contract/getLottery";
 import { ErrorResponse, LotteryInfo } from "../../../../components/type";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async function (
   req: NextApiRequest,
   res: NextApiResponse & (LotteryInfo | ErrorResponse)

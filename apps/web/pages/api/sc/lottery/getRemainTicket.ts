@@ -6,6 +6,7 @@ import {
   RemainTicket,
 } from "../../../../components/type";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async function (
   req: NextApiRequest,
   res: NextApiResponse & (RemainTicket | ErrorResponse)
