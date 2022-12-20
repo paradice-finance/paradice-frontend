@@ -7,7 +7,8 @@
         "NEXTAUTH_SECRET",
         "WALLETCONNECT_PROJECT_ID",
         "CHAIN_ID",
-        "LOTTERY_ADDRESS"
+        "LOTTERY_ADDRESS",
+        "SC_API"
       ],
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]

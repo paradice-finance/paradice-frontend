@@ -9,5 +9,6 @@ module.exports = {
     WALLETCONNECT_PROJECT_ID: process.env.WALLETCONNECT_PROJECT_ID,
     CHAIN_ID: process.env.CHAIN_ID,
     LOTTERY_ADDRESS: process.env.LOTTERY_ADDRESS,
+    SC_API: process.env.SC_API,
   },
 };
