@@ -3,6 +3,7 @@ import abi from "../../public/abi/lottery.json";
 import erc20ABI from "../../public/abi/erc20.json";
 import { readContract } from "@wagmi/core";
 import { BigNumber } from "ethers";
+import { convertBignumber } from "../../utils/convertor";
 
 export async function lotteryRead(
   functionName: string,
@@ -18,11 +19,11 @@ export async function lotteryRead(
     args,
   })) as any;
 
-  if (resp && resp._isBigNumber) {
-    return Number(BigNumber.from(resp._hex).toString());
-  }
+  // if (resp && resp._isBigNumber) {
+  //   return Number(BigNumber.from(resp._hex).toString());
+  // }
 
-  return resp;
+  return convertBignumber(resp);
 }
 
 type Erc20Function =
@@ -46,9 +47,9 @@ export async function erc20Read(
     args,
   })) as any;
 
-  if (resp && resp._isBigNumber) {
-    return Number(BigNumber.from(resp._hex).toString());
-  }
+  // if (resp && resp._isBigNumber) {
+  //   return Number(BigNumber.from(resp._hex).toString());
+  // }
 
-  return resp;
+  return convertBignumber(resp);
 }

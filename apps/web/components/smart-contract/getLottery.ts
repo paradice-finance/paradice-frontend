@@ -12,7 +12,7 @@ export async function getLottery(roundId: string): Promise<LotteryInfo | null> {
       roundId = String(resp);
     }
     const lottery: ContractReadResult = await lotteryRead(
-      "getBasicLottoInfo",
+      "getLottery",
       address,
       chainId,
       [roundId]

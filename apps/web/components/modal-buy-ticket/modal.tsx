@@ -26,7 +26,13 @@ export function ModalBuyTicket({
   const [loading, setLoading] = useState(false);
   const [lotteryState, setLotteryState] = useState<ModalState>(initialState);
   const [userBalance, setUserBalance] = useState<number>(0);
+  const [userAllowance, setUserAllowance] = useState<number>(0);
+
   const { address } = useAccount();
+
+  const requestBody = {
+    walletAddress: address,
+  };
 
   const fetcher = (url: string) =>
     fetch(url, {
@@ -37,28 +43,26 @@ export function ModalBuyTicket({
       },
     }).then((res) => res.json());
 
-  const requestBody = {
-    walletAddress: address,
-  };
-
   const { data: wallet, error: walletError } = useSWR<WalletBalance>(
-    `api/sc/tokenBalance/${tokenAddress}`,
+    `api/sc/token/${tokenAddress}`,
     fetcher,
     {
       refreshInterval: 5 * 1000,
     }
   );
+
   useEffect(() => {
-    setPrice(
-      (lotteryState.order.length * pricePerTicket) / Math.pow(10, decimals)
-    );
-  }, [decimals, lotteryState, pricePerTicket]);
+    setPrice(lotteryState.order.length * pricePerTicket);
+  }, [lotteryState]);
 
   useEffect(() => {
     if (wallet?.balance) {
       setUserBalance(wallet?.balance);
     }
-  }, [wallet?.balance]);
+    if (wallet?.allowance) {
+      setUserAllowance(wallet?.allowance);
+    }
+  }, [wallet?.balance, wallet?.allowance]);
 
   const setLotteryNumber = (
     event: React.ChangeEvent<HTMLInputElement>,

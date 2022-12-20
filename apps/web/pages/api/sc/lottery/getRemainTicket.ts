@@ -15,7 +15,7 @@ export default async function (
     const { address, chainId } = LotteryEnv;
 
     const remainTicket = await lotteryRead(
-      "getAvaliableTicketQty",
+      "getAvailableTicketQty",
       address,
       chainId
     );
