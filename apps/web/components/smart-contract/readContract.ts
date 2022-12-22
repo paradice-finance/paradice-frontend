@@ -19,10 +19,6 @@ export async function lotteryRead(
     args,
   })) as any;
 
-  // if (resp && resp._isBigNumber) {
-  //   return Number(BigNumber.from(resp._hex).toString());
-  // }
-
   return convertBignumber(resp);
 }
 
@@ -46,10 +42,6 @@ export async function erc20Read(
     chainId: Number(process.env.CHAIN_ID),
     args,
   })) as any;
-
-  // if (resp && resp._isBigNumber) {
-  //   return Number(BigNumber.from(resp._hex).toString());
-  // }
 
   return convertBignumber(resp);
 }
