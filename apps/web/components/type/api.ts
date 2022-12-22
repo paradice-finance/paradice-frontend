@@ -4,6 +4,7 @@ export type RemainTicket = {
 
 export type WalletBalance = {
   balance: number;
+  allowance: number;
 };
 
 export type ErrorResponse = {

@@ -11,6 +11,7 @@ import { ModalBuyTicket } from "../components/modal-buy-ticket/modal";
 import useSWR from "swr";
 import { LotteryInfo } from "../components/smart-contract/type";
 import { RemainTicket } from "../components/type";
+import { useAccount } from "wagmi";
 
 interface DataType {
   key: string;
@@ -40,6 +41,7 @@ export default function Home() {
   const [isShowModal, setIsShowModal] = useState(false);
   const [availableTicket, setAvailableTicket] = useState<number>(0);
   const [lotteryInfo, setLotteryInfo] = useState<LotteryInfo | null>(null);
+  const { isConnected } = useAccount();
 
   const { data: currentLotteryData, error: currentLotteryError } =
     useSWR<LotteryInfo>("/api/sc/lottery/current", fetcher);
@@ -157,6 +159,7 @@ export default function Home() {
               Simple to Buy, Hold and Win
             </h1>
             <Button
+              disabled={!isConnected}
               className="text-center rounded-md lg:ml-5 dark:text-gray-100 text-xl"
               size="large"
               onClick={openModal}

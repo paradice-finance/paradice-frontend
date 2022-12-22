@@ -12,7 +12,7 @@ export async function getLottery(roundId: string): Promise<LotteryInfo | null> {
       roundId = String(resp);
     }
     const lottery: ContractReadResult = await lotteryRead(
-      "getBasicLottoInfo",
+      "getLottery",
       address,
       chainId,
       [roundId]
@@ -65,7 +65,8 @@ export async function getLottery(roundId: string): Promise<LotteryInfo | null> {
       lotteryStatus: lotteryMap.get("lotteryStatus"),
       tokenAddress: lotteryMap.get("tokenAddress"),
       sizeOfLottery: lotteryMap.get("sizeOfLottery"),
-      ticketPrice: lotteryMap.get("ticketPrice"),
+      ticketPrice:
+        lotteryMap.get("ticketPrice") / Math.pow(10, Number(erc20[0])),
       winningTicketId: lotteryMap.get("winningTicketId"),
       lotteryAddress: address,
       currecyDecimals: Number(erc20[0]),
