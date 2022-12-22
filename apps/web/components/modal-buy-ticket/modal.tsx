@@ -4,6 +4,9 @@ import { ModalState } from "./modalState";
 import { InputTicket } from "./number-input";
 import { WalletBalance } from "../type";
 import useSWR from "swr";
+import { BuyTicketButton } from "./buy-button";
+import { ApproveButton } from "./approve-button";
+import { constants } from "ethers";
 
 interface ModalBuyTicketProps {
   pricePerTicket: number;
@@ -21,9 +24,11 @@ export function ModalBuyTicket({
   decimals,
   currency,
 }: ModalBuyTicketProps) {
-  const initialState: ModalState = { order: [0], tickets: {} };
+  const initialState: ModalState = {
+    order: [0],
+    tickets: { "0": { value: null } },
+  };
   const [price, setPrice] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [lotteryState, setLotteryState] = useState<ModalState>(initialState);
   const [userBalance, setUserBalance] = useState<number>(0);
   const [userAllowance, setUserAllowance] = useState<number>(0);
@@ -53,7 +58,7 @@ export function ModalBuyTicket({
 
   useEffect(() => {
     setPrice(lotteryState.order.length * pricePerTicket);
-  }, [lotteryState]);
+  }, [lotteryState, pricePerTicket]);
 
   useEffect(() => {
     if (wallet?.balance) {
@@ -111,13 +116,6 @@ export function ModalBuyTicket({
     </Fragment>
   ));
 
-  const onSubmit = async () => {
-    setLoading(true);
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  };
-
   return (
     <div className="fixed top-0 left-0 bottom-0 right-0 w-full h-full bg-slate-900/80 backdrop-blur-sm will-change-[opacity] text-[#9d92c7]">
       <div
@@ -148,6 +146,14 @@ export function ModalBuyTicket({
           </div>
           <div className="flex justify-between">
             <div className="inline-block text-sm  overflow-hidden">
+              You allowance
+            </div>
+            <div className="overflow-hidden inline-block text-[15px]">
+              {userAllowance} {currency}
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <div className="inline-block text-sm  overflow-hidden">
               You Balance
             </div>
             <div className="overflow-hidden inline-block text-[15px]">
@@ -167,20 +173,16 @@ export function ModalBuyTicket({
             </div>
           </div>
           <div className="flex items-center justify-center mb-2">
-            {loading ? (
-              <button
-                className="border rounded-[16px] w-full py-2 text-white bg-[#37C7D4] mb-6"
-                disabled
-              >
-                Loading
-              </button>
+            {userAllowance >= pricePerTicket ? (
+              <BuyTicketButton
+                lotteryNumbers={lotteryState.order.map(
+                  (idx) => lotteryState.tickets[idx].value
+                )}
+                affiliateAddress={constants.AddressZero}
+                isUseAffiliate={false}
+              />
             ) : (
-              <button
-                className="border rounded-[16px] w-full py-2 text-white bg-[#37C7D4] mb-6 hover:bg-[#8ee5ed]"
-                onClick={onSubmit}
-              >
-                Buy
-              </button>
+              <ApproveButton tokenAddress={tokenAddress} decimals={decimals} />
             )}
           </div>
         </div>
