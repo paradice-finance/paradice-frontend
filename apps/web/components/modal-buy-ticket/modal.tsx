@@ -86,9 +86,6 @@ export function ModalBuyTicket({
   };
 
   const scollToInputBox = (key: number) => {
-    console.log("current : ", refIBoxArray.current);
-    console.log("key: ", key);
-    console.log(refIBoxArray.current[key]);
     refIBoxArray.current[key].scrollIntoView({
       block: "center",
     });
@@ -104,8 +101,6 @@ export function ModalBuyTicket({
   };
 
   const addInputTicket = () => {
-    console.log("lotteryState.order.length : ", lotteryState.order.length);
-    console.log("remainTicket :", remainTicket);
     if (lotteryState.order.length < remainTicket) {
       let idx: number;
       if (lotteryState.order.length === 0) {

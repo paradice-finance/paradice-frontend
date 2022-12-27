@@ -30,7 +30,6 @@ export const ApproveButton = ({
     hash: data?.hash,
   });
 
-  // console.log({ waitForTransaction, loading: waitForTransaction.isLoading });
   return (
     <>
       {isLoading || isWriteLoad ? (
