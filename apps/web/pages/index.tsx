@@ -223,7 +223,7 @@ export default function Home() {
             pricePerTicket={currentLotteryData.ticketPrice}
             tokenAddress={currentLotteryData.tokenAddress}
             currency={currentLotteryData.currency}
-            remainTicket={10}
+            remainTicket={availableTicket}
             onCloseModal={() => setIsShowModal(false)}
           />
         </div>
