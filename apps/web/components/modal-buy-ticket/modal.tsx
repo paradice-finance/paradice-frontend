@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useAccount } from "wagmi";
 import { ModalState } from "./modalState";
 import { InputTicket } from "./number-input";
@@ -23,15 +23,17 @@ export function ModalBuyTicket({
   tokenAddress,
   decimals,
   currency,
+  remainTicket,
 }: ModalBuyTicketProps) {
   const initialState: ModalState = {
     order: [0],
-    tickets: { "0": { value: null } },
+    tickets: { "0": { value: "0", isWiggle: false } },
   };
   const [price, setPrice] = useState(0);
   const [lotteryState, setLotteryState] = useState<ModalState>(initialState);
   const [userBalance, setUserBalance] = useState<number>(0);
   const [userAllowance, setUserAllowance] = useState<number>(0);
+  const refIBoxArray = useRef([]);
 
   const { address } = useAccount();
 
@@ -58,6 +60,7 @@ export function ModalBuyTicket({
 
   useEffect(() => {
     setPrice(lotteryState.order.length * pricePerTicket);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lotteryState, pricePerTicket]);
 
   useEffect(() => {
@@ -69,32 +72,45 @@ export function ModalBuyTicket({
     }
   }, [wallet?.balance, wallet?.allowance]);
 
-  const setLotteryNumber = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    key: number
+  const updatelotteryState = (
+    key: number,
+    value: string,
+    isWiggle: boolean
   ) => {
     const s = lotteryState;
-    s.tickets[key] = { value: Number(event.target.value) };
+    s.tickets[key] = { value, isWiggle };
     setLotteryState((lotteryState) => ({
       ...lotteryState,
       tickets: s.tickets,
     }));
   };
 
+  const scollToInputBox = (key: number) => {
+    refIBoxArray.current[key].scrollIntoView({
+      block: "center",
+    });
+
+    updatelotteryState(key, lotteryState.tickets[key].value, true);
+  };
+
+  const setLotteryNumber = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    key: number
+  ) => {
+    updatelotteryState(key, event.target.value, false);
+  };
+
   const addInputTicket = () => {
-    let idx: number;
-    if (lotteryState.order.length === 0) {
-      idx = 0;
-    } else {
-      idx = lotteryState.order[lotteryState.order.length - 1] + 1;
+    if (lotteryState.order.length < remainTicket) {
+      let idx: number;
+      if (lotteryState.order.length === 0) {
+        idx = 0;
+      } else {
+        idx = lotteryState.order[lotteryState.order.length - 1] + 1;
+      }
+      lotteryState.order.push(idx);
+      updatelotteryState(idx, "0", false);
     }
-    const s = lotteryState;
-    s.order.push(idx);
-    s.tickets[idx] = { value: 0 };
-    setLotteryState((lotteryState) => ({
-      order: s.order,
-      tickets: s.tickets,
-    }));
   };
 
   const removeInputTicket = (key: number) => {
@@ -102,17 +118,30 @@ export function ModalBuyTicket({
       return value !== key;
     });
     delete lotteryState.tickets[key];
+    refIBoxArray.current.splice(key, 1);
     setLotteryState((lotteryState) => ({ ...lotteryState, order: filtered }));
+  };
+
+  const handleAnimationEnd = (key: number) => {
+    updatelotteryState(key, lotteryState.tickets[key].value, false);
   };
 
   let inputRender = lotteryState.order.map((idx) => (
     <Fragment key={idx}>
-      <InputTicket
-        isDisableRemove={lotteryState.order.length === 1}
-        index={idx}
-        onChange={setLotteryNumber}
-        onDelete={removeInputTicket}
-      />
+      <div
+        ref={(ref) => {
+          refIBoxArray.current[idx] = ref;
+        }}
+      >
+        <InputTicket
+          onAnimationEnd={handleAnimationEnd}
+          isDisableRemove={lotteryState.order.length === 1}
+          isWiggle={lotteryState.tickets[idx].isWiggle}
+          index={idx}
+          onChange={setLotteryNumber}
+          onDelete={removeInputTicket}
+        />
+      </div>
     </Fragment>
   ));
 
@@ -138,8 +167,9 @@ export function ModalBuyTicket({
           <div className="items-center mb-6 border-b-2 pb-3">
             <div>{inputRender}</div>
             <button
-              className="w-full bg-lime-500 hover:bg-lime-300 text-white rounded-full"
+              className="w-full bg-lime-500 hover:bg-lime-300 text-white rounded-full disabled:bg-gray-300"
               onClick={addInputTicket}
+              disabled={lotteryState.order.length >= remainTicket}
             >
               +
             </button>
@@ -175,9 +205,8 @@ export function ModalBuyTicket({
           <div className="flex items-center justify-center mb-2">
             {userAllowance >= pricePerTicket ? (
               <BuyTicketButton
-                lotteryNumbers={lotteryState.order.map(
-                  (idx) => lotteryState.tickets[idx].value
-                )}
+                scollToInputBox={scollToInputBox}
+                lottery={lotteryState}
                 affiliateAddress={constants.AddressZero}
                 isUseAffiliate={false}
               />
