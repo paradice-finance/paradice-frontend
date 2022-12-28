@@ -12,6 +12,11 @@
                 "type": "uint8"
             },
             {
+                "internalType": "uint32",
+                "name": "_maximumChosenNumber",
+                "type": "uint32"
+            },
+            {
                 "internalType": "uint256",
                 "name": "_ticketPrice",
                 "type": "uint256"
@@ -142,6 +147,12 @@
                 "internalType": "uint8",
                 "name": "sizeOfLottery",
                 "type": "uint8"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint32",
+                "name": "maximumChosenNumber",
+                "type": "uint32"
             },
             {
                 "indexed": false,
@@ -312,9 +323,9 @@
                 "type": "uint8"
             },
             {
-                "internalType": "uint16[]",
+                "internalType": "uint32[]",
                 "name": "_chosenNumbersForEachTicket",
-                "type": "uint16[]"
+                "type": "uint32[]"
             },
             {
                 "internalType": "address payable",
@@ -387,6 +398,11 @@
                 "internalType": "uint8",
                 "name": "_sizeOfLottery",
                 "type": "uint8"
+            },
+            {
+                "internalType": "uint32",
+                "name": "_maximumChosenNumber",
+                "type": "uint32"
             },
             {
                 "internalType": "uint256",
@@ -550,6 +566,11 @@
                         "internalType": "uint8",
                         "name": "sizeOfLottery",
                         "type": "uint8"
+                    },
+                    {
+                        "internalType": "uint32",
+                        "name": "maximumChosenNumber",
+                        "type": "uint32"
                     },
                     {
                         "internalType": "uint256",

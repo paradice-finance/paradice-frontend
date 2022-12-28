@@ -54,14 +54,13 @@ export async function getLottery(roundId: string): Promise<LotteryInfo | null> {
         if (key === "ticketPrice") {
           lotteryMap.set(key, Number(BigNumber.from(value).toString()));
         } else {
-          lotteryMap.set(key, BigNumber.from(value).toNumber());
+          lotteryMap.set(key, Number(BigNumber.from(value).toString()));
         }
       }
     }
-
     // Use object destructuring to create the lotteryInfo object from the Map object
     const lotteryInfo: LotteryInfo = {
-      lotteryID: lotteryMap.get("lotteryID"),
+      lotteryID: lotteryMap.get("lotteryId"),
       lotteryStatus: lotteryMap.get("lotteryStatus"),
       tokenAddress: lotteryMap.get("tokenAddress"),
       sizeOfLottery: lotteryMap.get("sizeOfLottery"),
@@ -72,6 +71,7 @@ export async function getLottery(roundId: string): Promise<LotteryInfo | null> {
       currecyDecimals: Number(erc20[0]),
       currency: String(erc20[1]),
     };
+
     return lotteryInfo;
   } catch (e) {
     console.log(e);

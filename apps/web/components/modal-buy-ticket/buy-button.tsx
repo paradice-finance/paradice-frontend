@@ -9,6 +9,7 @@ import lotteryABI from "../../public/abi/lottery.json";
 import { ModalState } from "./modalState";
 
 interface BuyTicketProps {
+  remainTicket: number;
   lottery: ModalState;
   affiliateAddress: string;
   isUseAffiliate: boolean;
@@ -20,6 +21,7 @@ export const BuyTicketButton = ({
   affiliateAddress,
   isUseAffiliate,
   scollToInputBox,
+  remainTicket,
 }: BuyTicketProps) => {
   const { chainId, address } = LotteryEnv;
   const lotteryNumbers = lottery.order.map((idx) =>
@@ -70,7 +72,7 @@ export const BuyTicketButton = ({
       ) : (
         <button
           className="border rounded-[16px] w-full py-2 text-white bg-[#37C7D4] mb-6 hover:bg-[#8ee5ed] disabled:bg-gray-300"
-          disabled={!write}
+          disabled={!write || remainTicket <= 0}
           onClick={() => onClick()}
         >
           Buy

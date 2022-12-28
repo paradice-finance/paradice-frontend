@@ -205,6 +205,7 @@ export function ModalBuyTicket({
           <div className="flex items-center justify-center mb-2">
             {userAllowance >= pricePerTicket ? (
               <BuyTicketButton
+                remainTicket={remainTicket}
                 scollToInputBox={scollToInputBox}
                 lottery={lotteryState}
                 affiliateAddress={constants.AddressZero}
