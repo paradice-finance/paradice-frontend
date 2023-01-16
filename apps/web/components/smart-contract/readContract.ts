@@ -2,14 +2,13 @@ export type ContractReadResult = { [key: string]: any } | number;
 import abi from "../../public/abi/lottery.json";
 import erc20ABI from "../../public/abi/erc20.json";
 import { readContract } from "@wagmi/core";
-import { BigNumber } from "ethers";
 import { convertBignumber } from "../../utils/convertor";
 
 export async function lotteryRead(
   functionName: string,
   address: string,
   chainId: number,
-  args?: string[]
+  args?: unknown[]
 ): Promise<ContractReadResult> {
   const resp = (await readContract({
     address,

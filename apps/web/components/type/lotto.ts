@@ -10,6 +10,9 @@ export interface LotteryInfo {
   currency: string;
 }
 
+export interface UserTicket {
+  numbers: Array<string>;
+}
 export const LotteryEnv = {
   address: process.env.LOTTERY_ADDRESS,
   chainId: Number(process.env.CHAIN_ID),
