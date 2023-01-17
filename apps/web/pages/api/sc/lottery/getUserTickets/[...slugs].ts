@@ -14,22 +14,17 @@ export default async function (
     } = req;
 
     if (slugs === undefined || slugs.length != 2) {
-      res.status(400).json({ error: "Invalid Data Input" });
-      return;
+      return res.status(400).json({ error: "Invalid Data Input" });
     }
 
     if (!isAddress(slugs[0])) {
-      res.status(400).json({ error: "Invalid Wallet Address" });
-      return;
+      return res.status(400).json({ error: "Invalid Wallet Address" });
     }
 
     const userTickets = await getUserTickets(slugs[0], slugs[1]);
-    res.status(200).json(userTickets);
-
-    return;
+    return res.status(200).json(userTickets);
   } else {
-    res.status(405).json({ error: "Method Not Allowed" });
-    return;
+    return res.status(405).json({ error: "Method Not Allowed" });
   }
 }
 

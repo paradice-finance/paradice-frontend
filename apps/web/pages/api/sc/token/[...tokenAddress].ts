@@ -17,8 +17,7 @@ export default async function token(
       } = req;
 
       if (!tokenAddress || !body || !body.walletAddress) {
-        res.status(400).json({ error: "Bad Request" });
-        return;
+        return res.status(400).json({ error: "Bad Request" });
       }
 
       const erc20contract = {
@@ -54,11 +53,9 @@ export default async function token(
         allowance: a / denominator,
       });
     } catch (e) {
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
+      return res.status(500).json({ error: "Internal Server Error" });
     }
   } else {
-    res.status(405).json({ error: "Method Not Allowed" });
-    return;
+    return res.status(405).json({ error: "Method Not Allowed" });
   }
 }

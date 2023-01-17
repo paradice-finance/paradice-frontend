@@ -21,14 +21,11 @@ export default async function (
     );
 
     if (remainTicket !== null) {
-      res.status(200).json({ remainTicket });
-      return;
+      return res.status(200).json({ remainTicket });
     } else {
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
+      return res.status(500).json({ error: "Internal Server Error" });
     }
   } else {
-    res.status(405).json({ error: "Method Not Allowed" });
-    return;
+    return res.status(405).json({ error: "Method Not Allowed" });
   }
 }

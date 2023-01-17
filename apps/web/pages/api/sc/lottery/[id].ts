@@ -13,20 +13,16 @@ export default async function (
     } = req;
 
     if (id === undefined) {
-      res.status(400).json({ error: "Invalid ID" });
-      return;
+      return res.status(400).json({ error: "Invalid ID" });
     }
 
     const lottery = await getLottery(String(id));
     if (lottery !== null) {
-      res.status(200).json(lottery);
-      return;
+      return res.status(200).json(lottery);
     } else {
-      res.status(404).json({ error: "Not Found LotteryInfo" });
-      return;
+      return res.status(404).json({ error: "Not Found LotteryInfo" });
     }
   } else {
-    res.status(405).json({ error: "Method Not Allowed" });
-    return;
+    return res.status(405).json({ error: "Method Not Allowed" });
   }
 }
