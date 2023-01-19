@@ -11,8 +11,14 @@ export interface LotteryInfo {
 }
 
 export interface UserTicket {
-  numbers: Array<string>;
+  tickets: Array<Ticket>;
 }
+
+export interface Ticket {
+  ticketId: number;
+  chosenNumber: string;
+}
+
 export const LotteryEnv = {
   address: process.env.LOTTERY_ADDRESS,
   chainId: Number(process.env.CHAIN_ID),
