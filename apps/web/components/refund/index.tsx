@@ -40,10 +40,10 @@ const UserTicket: React.FC<Props> = ({
 
   useEffect(() => {
     if (userTicket !== undefined) {
-      let ts: Ticket[] = [];
-      userTicket.tickets.forEach((t) => {
-        ts.push({ id: t.ticketId, number: t.chosenNumber });
-      });
+      let ts: Ticket[] = userTicket.tickets.map((t) => ({
+        id: t.ticketId,
+        number: t.chosenNumber,
+      }));
       setTicket(() => ts);
     }
   }, [userTicket]);
