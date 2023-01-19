@@ -4,7 +4,7 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 import erc20ABI from "../../public/abi/erc20.json";
-import { LotteryEnv } from "../smart-contract/type";
+import { LotteryEnv } from "../type";
 import { BigNumber } from "ethers";
 
 interface ApproveButtonProps {

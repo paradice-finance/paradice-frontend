@@ -21,18 +21,20 @@ export const getUserTickets = async (
       chainId,
       [roundId, userAddress]
     )) as Array<any>;
-    if (ticketByRound.length === 0) return { numbers: [] };
-
+    if (ticketByRound.length === 0) return { tickets: [] };
+    const ticketIds = ticketByRound.map((t) => convertBignumber(t));
     const allticket = (await lotteryRead("getTickets", address, chainId, [
-      ticketByRound.map((t) => convertBignumber(t)),
+      ticketIds,
     ])) as any[];
 
-    const response = allticket.map((d) => {
+    const response = allticket.map((d, i) => {
       const map = new Map(Object.entries(d));
-      return convertBignumber(map.get("number"));
+      return {
+        ticketId: ticketIds[i],
+        chosenNumber: String(convertBignumber(map.get("number"))),
+      };
     });
-
-    return { numbers: response };
+    return { tickets: response };
   } catch (e) {
     console.log(e);
     return null;

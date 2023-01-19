@@ -9,8 +9,7 @@ import utilStyles from "../styles/utils.module.css";
 import Container from "../components/container";
 import { ModalBuyTicket } from "../components/modal-buy-ticket/modal";
 import useSWR from "swr";
-import { LotteryInfo } from "../components/smart-contract/type";
-import { RemainTicket } from "../components/type";
+import { LotteryInfo, RemainTicket } from "../components/type/";
 import { useAccount } from "wagmi";
 
 interface DataType {
@@ -67,6 +66,7 @@ export default function Home() {
     if (currentLotteryData) {
       setLotteryInfo(() => ({ ...currentLotteryData }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remainTicket?.remainTicket, currentLotteryData]);
 
   const openModal = () => {
