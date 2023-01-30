@@ -209,7 +209,6 @@ export function ModalBuyTicket({
                 scollToInputBox={scollToInputBox}
                 lottery={lotteryState}
                 affiliateAddress={constants.AddressZero}
-                isUseAffiliate={false}
               />
             ) : (
               <ApproveButton tokenAddress={tokenAddress} decimals={decimals} />

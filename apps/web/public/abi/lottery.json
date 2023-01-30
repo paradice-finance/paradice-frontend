@@ -51,6 +51,12 @@
             {
                 "indexed": false,
                 "internalType": "address",
+                "name": "buyerAddress",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
                 "name": "affiliateAddress",
                 "type": "address"
             },
@@ -188,7 +194,7 @@
             {
                 "indexed": false,
                 "internalType": "address",
-                "name": "affiliateAddress",
+                "name": "treasuryAddress",
                 "type": "address"
             },
             {
@@ -404,11 +410,6 @@
                 "internalType": "address payable",
                 "name": "_affiliateAddress",
                 "type": "address"
-            },
-            {
-                "internalType": "bool",
-                "name": "_isAffiliate",
-                "type": "bool"
             }
         ],
         "name": "batchBuyTicket",
@@ -426,7 +427,7 @@
         ],
         "name": "batchRefundTicket",
         "outputs": [],
-        "stateMutability": "payable",
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -443,18 +444,7 @@
         "type": "function"
     },
     {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_lotteryId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_ticketId",
-                "type": "uint256"
-            }
-        ],
+        "inputs": [],
         "name": "claimReward",
         "outputs": [],
         "stateMutability": "nonpayable",
@@ -815,6 +805,25 @@
             }
         ],
         "name": "getUserTickets",
+        "outputs": [
+            {
+                "internalType": "uint256[]",
+                "name": "",
+                "type": "uint256[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_ownerAddress",
+                "type": "address"
+            }
+        ],
+        "name": "getWinningLotteries",
         "outputs": [
             {
                 "internalType": "uint256[]",

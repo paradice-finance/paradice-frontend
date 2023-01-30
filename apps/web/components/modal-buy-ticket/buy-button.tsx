@@ -11,14 +11,12 @@ interface BuyTicketProps {
   remainTicket: number;
   lottery: ModalState;
   affiliateAddress: string;
-  isUseAffiliate: boolean;
   scollToInputBox: (idx: number) => void;
 }
 
 export const BuyTicketButton = ({
   lottery,
   affiliateAddress,
-  isUseAffiliate,
   scollToInputBox,
   remainTicket,
 }: BuyTicketProps) => {
@@ -32,12 +30,7 @@ export const BuyTicketButton = ({
     abi: lotteryABI,
     functionName: "batchBuyTicket",
     chainId,
-    args: [
-      lotteryNumbers.length,
-      lotteryNumbers,
-      affiliateAddress,
-      isUseAffiliate,
-    ],
+    args: [lotteryNumbers.length, lotteryNumbers, affiliateAddress],
   });
 
   const { data, isLoading: isWriteLoad, write } = useContractWrite(config);
