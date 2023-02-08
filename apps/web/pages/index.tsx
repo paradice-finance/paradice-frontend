@@ -8,6 +8,7 @@ import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import Container from "../components/container";
 import { ModalBuyTicket } from "../components/modal-buy-ticket/modal";
+import { ModalBuyTicket2 } from "../components/modal-buy-ticket2/modal";
 import useSWR from "swr";
 import { LotteryInfo, RemainTicket } from "../components/type/";
 import { useAccount } from "wagmi";
@@ -38,6 +39,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function Home() {
   const [hydrated, setHydrated] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
+  const [isShowModal2, setIsShowModal2] = useState(false);
   const [availableTicket, setAvailableTicket] = useState<number>(0);
   const [lotteryInfo, setLotteryInfo] = useState<LotteryInfo | null>(null);
   const { isConnected } = useAccount();
@@ -71,6 +73,10 @@ export default function Home() {
 
   const openModal = () => {
     setIsShowModal(true);
+  };
+
+  const openModal2 = () => {
+    setIsShowModal2(true);
   };
 
   const columns: ColumnsType<DataType> = [
@@ -166,6 +172,15 @@ export default function Home() {
             >
               Buy Ticket
             </Button>
+            <Button
+              disabled={!isConnected}
+              className="text-center rounded-md lg:ml-5 dark:text-gray-100 text-xl"
+              size="large"
+              onClick={openModal2}
+            >
+              Buy Ticket2
+              </Button>
+
           </Container>
           <Container className="p-4">
             <div
@@ -225,6 +240,13 @@ export default function Home() {
             currency={currentLotteryData.currency}
             remainTicket={availableTicket}
             onCloseModal={() => setIsShowModal(false)}
+          />
+        </div>
+      )}{isShowModal2 && currentLotteryData && (
+        <div>
+          <ModalBuyTicket2
+            userAddress={"0x2cf6De37eCDCC8c6213Def4502a46031269B2fe2"}
+            onCloseModal={() => setIsShowModal2(false)}
           />
         </div>
       )}
