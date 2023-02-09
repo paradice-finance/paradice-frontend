@@ -16,5 +16,6 @@ declare namespace NodeJS {
     NEXTAUTH_SECRET: string;
     SC_API: string;
     WALLETCONNECT_PROJECT_ID: string;
+    PARADICE_BACKEND_URL: string;
   }
 }
