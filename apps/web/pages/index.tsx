@@ -166,6 +166,7 @@ export default function Home() {
             >
               Buy Ticket
             </Button>
+
           </Container>
           <Container className="p-4">
             <div
