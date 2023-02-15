@@ -6,7 +6,7 @@ export interface LotteryInfo {
   sizeOfLottery: number;
   ticketPrice: number;
   winningTicketId: number;
-  currecyDecimals: number;
+  currencyDecimals: number;
   currency: string;
 }
 

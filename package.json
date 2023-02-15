@@ -30,7 +30,8 @@
     "axios": "^0.26.0",
     "dotenv-mono": "^1.3.8",
     "postcss": "^8.4.20",
-    "tailwindcss": "^3.2.4"
+    "tailwindcss": "^3.2.4",
+    "focus-trap-react": "^10.0.2"
   },
   "packageManager": "yarn@1.22.19"
 }

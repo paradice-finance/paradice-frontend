@@ -68,7 +68,7 @@ export async function getLottery(roundId: string): Promise<LotteryInfo | null> {
         lotteryMap.get("ticketPrice") / Math.pow(10, Number(erc20[0])),
       winningTicketId: lotteryMap.get("winningTicketId"),
       lotteryAddress: address,
-      currecyDecimals: Number(erc20[0]),
+      currencyDecimals: Number(erc20[0]),
       currency: String(erc20[1]),
     };
 
