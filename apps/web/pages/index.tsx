@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button, Card, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { motion, Variants } from "framer-motion";
-
+import { useBuyTicketModal } from "../components/modal/buy-ticket-modal";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import Container from "../components/container";
@@ -49,7 +49,7 @@ export default function Home() {
     useSWR<RemainTicket>("/api/sc/lottery/getRemainTicket", fetcher, {
       refreshInterval: 5 * 1000,
     });
-
+   
   const ticketNumbers = Array.from(
     { length: lotteryInfo ? lotteryInfo.sizeOfLottery : 20 },
     () => Math.floor(Math.random() * 20)
@@ -57,6 +57,7 @@ export default function Home() {
 
   useEffect(() => {
     setHydrated(true);
+    console.log(currentLotteryData)
   }, []);
 
   useEffect(() => {
@@ -72,6 +73,18 @@ export default function Home() {
   const openModal = () => {
     setIsShowModal(true);
   };
+
+  
+  const prop = {
+            currencyDecimals: currentLotteryData?.currencyDecimals || 2,
+            pricePerTicket:currentLotteryData?.ticketPrice,
+            tokenAddress:currentLotteryData?.tokenAddress,
+            currency: currentLotteryData?.currency,
+            remainTicket:availableTicket,
+            onCloseModal:() => setIsShowModal(false)
+  }
+
+   const { BuyTicketModal, setShowBuyTicketModal } = useBuyTicketModal(prop);
 
   const columns: ColumnsType<DataType> = [
     {
@@ -120,6 +133,7 @@ export default function Home() {
           <Head>
             <title>{siteTitle}</title>
           </Head>
+           <BuyTicketModal />
           <Container className="flex flex-wrap justify-center md:p-8 md:pt-0">
             <svg height="0" width="0">
               <defs>
@@ -158,6 +172,7 @@ export default function Home() {
             <h1 className={`${utilStyles.displayTitle} font-bold my-5`}>
               Simple to Buy, Hold and Win
             </h1>
+
             <Button
               disabled={!isConnected}
               className="text-center rounded-md lg:ml-5 dark:text-gray-100 text-xl"
@@ -166,6 +181,14 @@ export default function Home() {
             >
               Buy Ticket
             </Button>
+            <Button
+              className="text-center rounded-md lg:ml-5 dark:text-gray-100 text-xl"
+              size="large"
+              onClick={() => setShowBuyTicketModal(true)}
+            >
+              Buy Ticket2
+            </Button>
+           
 
           </Container>
           <Container className="p-4">
@@ -220,7 +243,7 @@ export default function Home() {
       {isShowModal && currentLotteryData && (
         <div>
           <ModalBuyTicket
-            decimals={currentLotteryData.currecyDecimals}
+            decimals={currentLotteryData.currencyDecimals}
             pricePerTicket={currentLotteryData.ticketPrice}
             tokenAddress={currentLotteryData.tokenAddress}
             currency={currentLotteryData.currency}

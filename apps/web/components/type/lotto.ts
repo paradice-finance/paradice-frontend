@@ -6,7 +6,7 @@ export interface LotteryInfo {
   sizeOfLottery: number;
   ticketPrice: number;
   winningTicketId: number;
-  currecyDecimals: number;
+  currencyDecimals: number;
   currency: string;
 }
 
@@ -20,6 +20,6 @@ export interface Ticket {
 }
 
 export const LotteryEnv = {
-  address: process.env.LOTTERY_ADDRESS,
+  address: "0x2E2E9Ba4B777936E0cCF240Bd3a50320520E5B13",
   chainId: Number(process.env.CHAIN_ID),
 };

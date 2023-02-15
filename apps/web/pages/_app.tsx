@@ -22,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   if (ready && !process.env.WALLETCONNECT_PROJECT_ID) {
+    console.log(process.env.WALLETCONNECT_PROJECT_ID, "tets")
     throw new Error(
       "You need to provide WALLETCONNECT_PROJECT_ID env variable"
     );
