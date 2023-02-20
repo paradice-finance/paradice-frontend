@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Disclosure } from "@headlessui/react";
-import ThemeChanger from "./DarkSwitch";
 import ConnectWalletButton from "./ConnectWalletButton";
 import Image from "next/image";
 
@@ -8,8 +7,8 @@ export default function Navbar() {
   const navigation = ["Menu"];
 
   return (
-    <div className="w-full">
-      <nav className="container relative flex flex-wrap items-center justify-between p-8 mx-auto lg:justify-between xl:px-0">
+    <div className="w-full z-50 sticky top-0 bg-white border-b-2">
+      <nav className="p-2 container flex flex-wrap items-center justify-between mx-auto lg:justify-between xl:px-0">
         {/* Logo  */}
         <Disclosure>
           {({ open }) => (
@@ -58,7 +57,7 @@ export default function Navbar() {
 
                 <Disclosure.Panel className="flex flex-wrap w-full my-5 lg:hidden justify-center">
                   <>
-                    {navigation.map((item, index) => (
+                    {/* {navigation.map((item, index) => (
                       <Link
                         key={index}
                         href="/"
@@ -66,7 +65,7 @@ export default function Navbar() {
                       >
                         {item}
                       </Link>
-                    ))}
+                    ))} */}
                     <ConnectWalletButton />
                   </>
                 </Disclosure.Panel>
@@ -76,7 +75,7 @@ export default function Navbar() {
         </Disclosure>
 
         {/* menu  */}
-        <div className="hidden text-center lg:flex lg:items-center">
+        {/* <div className="hidden text-center lg:flex lg:items-center">
           <ul className="items-center justify-end flex-1 pt-6 list-none lg:pt-0 lg:flex">
             {navigation.map((menu, index) => (
               <li className="mr-3 nav__item" key={index}>
@@ -89,13 +88,15 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
-        <div className="hidden mr-3 space-x-4 lg:flex nav__item d-flex justify-end" style={{ width: '210px' }}>
+        <div
+          className="hidden mr-3 space-x-4 lg:flex nav__item d-flex justify-end"
+          style={{ width: "210px" }}
+        >
           <ConnectWalletButton />
-          <ThemeChanger />
         </div>
-      </nav >
-    </div >
+      </nav>
+    </div>
   );
 }
